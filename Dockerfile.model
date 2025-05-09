@@ -1,0 +1,23 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements
+COPY model_requirements.txt .
+
+# Instalar dependencias de Python
+RUN pip install --no-cache-dir -r model_requirements.txt
+
+# Copiar el código del servicio
+COPY model_service/ ./model_service/
+
+# Exponer el puerto
+EXPOSE 8000
+
+# Comando para ejecutar el servicio
+CMD ["python", "model_service/app.py"] 
