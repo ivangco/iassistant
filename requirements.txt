@@ -1,9 +1,11 @@
 langchain>=0.1.12
 langchain-openai>=0.3.16
 langchain-community>=0.0.28
+langchain-huggingface>=0.0.10
 openai>=1.68.2,<2.0.0
 python-dotenv>=1.0.1
-gradio>=4.44.1
+gradio==4.19.2
+gradio-client==0.10.1
 faiss-cpu>=1.7.4
 sentence-transformers>=4.1.0
 requests>=2.32.3
@@ -12,4 +14,6 @@ pypdf>=4.0.1
 pdfminer.six>=20221105
 fastapi==0.109.2
 uvicorn==0.27.1
-python-multipart==0.0.9 
+python-multipart==0.0.9
+huggingface_hub[hf_xet]>=0.20.3
+hf_xet>=0.0.3 

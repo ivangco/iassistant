@@ -76,11 +76,13 @@ with gr.Blocks() as demo:
 # Iniciar la aplicación
 if __name__ == "__main__":
     try:
+        logging.info("✅ Chatbot inicializado correctamente")
         demo.launch(
             server_name="0.0.0.0",
             server_port=7860,
-            show_error=True
+            share=True,
+            allowed_paths=["docs"]
         )
     except Exception as e:
-        logger.error(f"❌ Error al iniciar la aplicación: {str(e)}")
+        logging.error(f"❌ Error al iniciar la aplicación: {str(e)}")
         raise 

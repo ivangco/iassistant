@@ -48,6 +48,9 @@ async def lifespan(app: FastAPI):
                 local_files_only=False,
                 cache_dir="/root/.cache/huggingface"
             )
+            # Configurar el token de padding
+            if tokenizer.pad_token is None:
+                tokenizer.pad_token = tokenizer.eos_token
             logger.info("✅ Tokenizador cargado exitosamente")
         except Exception as e:
             logger.error(f"❌ Error al cargar el tokenizador: {str(e)}")
