@@ -111,12 +111,15 @@ async def generate_response(query: Query):
         # Generar con parámetros más conservadores
         outputs = model.generate(
             inputs["input_ids"],
-            max_length=200,
+            max_new_tokens=200,
             num_return_sequences=1,
             temperature=0.7,
             do_sample=True,
             pad_token_id=tokenizer.eos_token_id,
-            no_repeat_ngram_size=2
+            no_repeat_ngram_size=2,
+            repetition_penalty=1.2,
+            top_p=0.9,
+            top_k=50
         )
         
         response = tokenizer.decode(outputs[0], skip_special_tokens=True)
