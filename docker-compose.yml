@@ -2,27 +2,54 @@ version: '3.8'
 
 services:
   app:
-    build:
+    build: 
       context: .
       dockerfile: Dockerfile.app
     ports:
       - "7860:7860"
     environment:
       - MODEL_SERVICE_URL=http://model:8000
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-default_key}
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+    env_file:
+      - .env
     volumes:
       - ./docs:/app/docs
     depends_on:
-      - model
+      model:
+        condition: service_healthy
+    networks:
+      - asistente-network
 
   model:
-    build:
-      context: .
-      dockerfile: Dockerfile.model
+    build: 
+      context: ./model_service
+      dockerfile: Dockerfile
     ports:
-      - "8000:8000"
+      - "8001:8000"
+    environment:
+      - ENVIRONMENT=${ENVIRONMENT:-development}
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 60s
+      timeout: 30s
+      retries: 5
+      start_period: 120s
     volumes:
       - model_cache:/root/.cache/huggingface
+    networks:
+      - asistente-network
 
 volumes:
-  model_cache: 
+  model_cache:
+
+networks:
+  asistente-network:
+    driver: bridge 

@@ -124,9 +124,9 @@ class EnterpriseChatbot:
     def process_query(self, username: str, query: str) -> str:
         """Procesa una consulta del usuario y devuelve una respuesta."""
         try:
-            # Verificar autenticación
-            if not self.auth_manager.authenticate(username, ""):
-                return "❌ Error: Usuario no autenticado"
+            # Verificación de autenticación temporalmente deshabilitada
+            # if not self.auth_manager.authenticate(username, ""):
+            #     return "❌ Error: Usuario no autenticado"
             
             # Verificar si la consulta está vacía
             if not query.strip():

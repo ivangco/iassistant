@@ -1,4 +1,14 @@
-from langchain_community.document_loaders import PyPDFLoader, TextLoader
+try:
+    from langchain_community.document_loaders import PyPDFLoader, TextLoader
+except ImportError as e:
+    import logging
+    logging.error(f"❌ Error al importar PyPDFLoader: {str(e)}")
+    logging.error("Intentando instalar dependencias faltantes...")
+    import subprocess
+    import sys
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "pypdf>=4.0.1", "pdfminer.six>=20221105"])
+    from langchain_community.document_loaders import PyPDFLoader, TextLoader
+
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS

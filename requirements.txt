@@ -7,4 +7,9 @@ gradio>=4.44.1
 faiss-cpu>=1.7.4
 sentence-transformers>=4.1.0
 requests>=2.32.3
-pydantic>=2.6.1 
+pydantic>=2.6.1
+pypdf>=4.0.1
+pdfminer.six>=20221105
+fastapi==0.109.2
+uvicorn==0.27.1
+python-multipart==0.0.9 
